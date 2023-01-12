@@ -1,31 +1,14 @@
-.header {
-    background-color: gray;
-    columns: 2;
+html {
+    height: 100vh;
 }
 
-.brightline-logo {
-    margin-top: 10px;
-}
-
-.align-left {
-    text-align: end;
-}
-
-.card {
-    display: block;
-    border: 1px solid gray;
-    width: 100%;
-    margin-top: 1%;
-    padding-top: 1%;
-    padding-bottom: 1%;
-}
-
-.hide-element {
-    display: none;
-}
-
-.focus-button {
-    border: 2px solid red;
+body {
+    background: rgb(2,0,36);
+    background: linear-gradient(30deg, rgba(2,0,36,1) 0%, rgba(46,26,68,1) 50%, rgba(59,25,64,1) 100%);
+    background-repeat: no-repeat;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 #div-video-player {
@@ -40,4 +23,69 @@
 #video-player {
     width: 80%;
     height: 80%;
+}
+
+#video-cards {
+    flex: 50%;
+    display: grid;
+}
+
+#preview {
+    flex: 50%;
+}
+
+.header {
+    background-color: white;
+    columns: 2;
+    margin-bottom: 1%;
+}
+
+.brightline-logo {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.align-left {
+    text-align: end;
+}
+
+.card {
+    border: 1px solid gray;
+    border-left: 0;
+    margin-bottom: 1%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    width: 70%;
+    background-color: transparent;
+    color: white;
+}
+
+.hide-element {
+    display: none;
+}
+
+.focus-button {
+    border: 2px solid white;
+    transition: all 0.3s ease-in-out;
+    transform: scaleX(1.1);
+}
+
+.display-in-columns {
+    display: flex;
+}
+
+#preview-player {
+    width: 38%;
+    height: auto;
+    position: absolute;
+    left: 571px;
+    top: 121px;
+}
+
+.preview-container {
+    position: absolute;
+    width: 45%;
+    height: auto;
+    left: 535px;
+    top: 92px;
 }
