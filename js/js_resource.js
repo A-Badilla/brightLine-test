@@ -1,13 +1,11 @@
 let index = 0;
 let json_data;
 
-
-
 window.onload = async () => {
     await fetch('https://cdn-media.brightline.tv/training/demo.json')
         .then((response) => response.json())
         .then((json) => {
-           json_data = json;
+            json_data = json;
         });
     startWebApp()
 };
@@ -15,7 +13,6 @@ window.onload = async () => {
 const startWebApp = () => {
     let videoElement = document.getElementById('video-player');
     videoElement.addEventListener('ended', endedVideo, false);
-    console.log("aca", json_data)
 
     let parent_button_div = document.getElementById("video-cards");
     for (let stream of json_data.streams) {
@@ -24,7 +21,7 @@ const startWebApp = () => {
 }
 
 const constructCardVideo = (parent_button_div, element) => {
-    if (element.name && element.mediaFile){
+    if (element.name && element.mediaFile) {
         let video = document.createElement('video');
         video.src = element.mediaFile
         video.oncanplay = () => {
@@ -39,7 +36,7 @@ const constructCardVideo = (parent_button_div, element) => {
     }
 };
 
-document.addEventListener('keydown', (e) =>{
+document.addEventListener('keydown', (e) => {
     const currentFocus = document.querySelector('.focus-button');
     const currentId = parseInt(currentFocus.id);
     const buttonList = document.querySelectorAll(".card");
@@ -68,7 +65,7 @@ document.addEventListener('keydown', (e) =>{
             break;
         case 40: //down
             if (currentId < buttonList.length - 1) {
-                const nextFocus = document.getElementById(`${currentId+1}`)
+                const nextFocus = document.getElementById(`${currentId + 1}`)
                 currentFocus.classList.remove("focus-button");
                 nextFocus.classList.add("focus-button");
             }
