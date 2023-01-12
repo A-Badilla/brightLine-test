@@ -26,12 +26,28 @@ body {
 }
 
 #video-cards {
-    flex: 50%;
-    display: grid;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+
+#video-cards::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+#video-cards {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 
 #preview {
-    flex: 50%;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .header {
@@ -47,14 +63,15 @@ body {
 
 .align-left {
     text-align: end;
+    font-family: Arial, sans-serif;
 }
 
 .card {
     border: 1px solid gray;
     border-left: 0;
-    margin-bottom: 1%;
-    padding-top: 1%;
-    padding-bottom: 1%;
+    margin-bottom: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     width: 70%;
     background-color: transparent;
     color: white;
@@ -72,20 +89,30 @@ body {
 
 .display-in-columns {
     display: flex;
+    height: 46vh;
 }
 
 #preview-player {
-    width: 38%;
-    height: auto;
-    position: absolute;
-    left: 571px;
-    top: 121px;
+    width: 100%;
 }
 
 .preview-container {
-    position: absolute;
-    width: 45%;
-    height: auto;
-    left: 535px;
-    top: 92px;
+    background-image: url("../images/TV1.svg");
+    box-sizing: border-box;
+    position: relative;
+    padding: 5% 9% 17% 9.8%;
+    background-size: 100% 95%;
+    background-repeat: no-repeat;
+    width: 85%;
+    align-items: center;
+    margin-top: 10%;
+}
+
+.font-style {
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.controls-style {
+    margin-left: 1%;
 }

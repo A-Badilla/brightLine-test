@@ -1,82 +1,20 @@
 let index = 0;
-let json_data = {
-        "streams": [
-            {
-                "name": "Scrollable Carousel - BMW Mini correct",
-                "mediaFile": "https://cdn-media.brightline.tv/demo/ces2023/creatives/isso_mini/media/videos/01_hulu_brightline_south_december_video_windowed_bl720.mp4"
-            },
-            {
-                "name": "Scrollable Carousel - BMW Mini",
-                "mediaFile": "https://cdn-media.brightline.tv/demo/ces2023/creatives/isso_mini/media/videos/01_hulu_brightline_south_december_video_windowed_bl720.mp4"
-            },
-            {
-                "name": "Scrollable Carousel - BMW Mini",
-                "mediaFile": "https://cdn-media.brightline.tv/demo/ces2023/creatives/isso_mini/media/videos/01_hulu_brightline_south_december_video_windowed_bl720.mp4"
-            },
-            {
-                "name": "Scrollable Carousel - BMW Mini",
-                "mediaFile": "https://cdn-media.brightline.tv/demo/ces2023/creatives/isso_mini/media/videos/01_hulu_brightline_south_december_video_windowed_bl720.mp4"
-            },
-            {
-                "name": "Scrollable Carousel - BMW Mini",
-                "mediaFile": "https://cdn-media.brightline.tv/demo/ces2023/creatives/isso_mini/media/videos/01_hulu_brightline_south_december_video_windowed_bl720.mp4"
-            },
-            {
-                "name": "Scrollable Carousel - BMW Mini",
-                "mediaFile": "https://cdn-media.brightline.tv/demo/ces2023/creatives/isso_mini/media/videos/01_hulu_brightline_south_december_video_windowed_bl720.mp4"
-            },
-            {
-                "name": "Scrollable Carousel - BMW Mini",
-                "mediaFile": "https://cdn-media.brightline.tv/demo/ces2023/creatives/isso_mini/media/videos/01_hulu_brightline_south_december_video_windowed_bl720.mp4"
-            },
-            {
-                "name": "Scrollable Carousel - BMW Mini",
-                "mediaFile": "https://cdn-media.brightline.tv/demo/ces2023/creatives/isso_mini/media/videos/01_hulu_brightline_south_december_video_windowed_bl720.mp4"
-            },
-            {
-                "name": "Scrollable Carousel - BMW Mini",
-                "mediaFile": "https://cdn-media.brightline.tv/demo/ces2023/creatives/isso_mini/media/videos/01_hulu_brightline_south_december_video_windowed_bl720.mp4"
-            },
-            {
-                "name": "Scrollable Carousel - BMW Mini",
-                "mediaFile": "https://cdn-media.brightline.tv/demo/ces2023/creatives/isso_mini/media/videos/01_hulu_brightline_south_december_video_windowed_bl720.mp4"
-            },
-            // {
-            //     "name": "Scrollable Carousel - BMW Mini",
-            //     "mediaFile": "https://cdn-media.brightline.tv/demo/ces2023/creatives/isso_mini/media/videos/01_hulu_brightline_south_december_video_windowed_bl720.mp4"
-            // },
-            // {
-            //     "name": "Scrollable Carousel - BMW Mini",
-            //     "mediaFile": "https://cdn-media.brightline.tv/demo/ces2023/creatives/isso_mini/media/videos/01_hulu_brightline_south_december_video_windowed_bl720.mp4"
-            // },
-            // {
-            //     "name": "Scrollable Carousel - BMW Mini",
-            //     "mediaFile": "https://cdn-media.brightline.tv/demo/ces2023/creatives/isso_mini/media/videos/01_hulu_brightline_south_december_video_windowed_bl720.mp4"
-            // },
-            {
-                "name": "Scrollable Carousel - Vizzy",
-                "mediaFile": "https://3860af3e8e3fbfdb.mediapackage.us-east-2.amazonaws.com/out/v1/791e60d1176b4746aabf4e580a1c0611/index.m3u8"
-            },
-            {
-                "name": "Bunny",
-                "mediaFile": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"
-            }
-        ]
-    }
-;
+let scrollVal = 0;
+let json_data;
 
 window.onload = async () => {
-    // await fetch('https://cdn-media.brightline.tv/training/demo.json')
-    //     .then((response) => response.json())
-    //     .then((json) => {
-    //         json_data = json;
-    //     });
+    await fetch('https://cdn-media.brightline.tv/training/demo.json')
+        .then((response) => response.json())
+        .then((json) => {
+            json_data = json;
+        });
     json_data !== undefined ? startWebApp() : alert("Couldn't fetch from server")
 };
 
 const startWebApp = () => {
     let videoElement = document.getElementById('video-player');
     videoElement.addEventListener('ended', endedVideo, false);
+
 
     let parentButtonDiv = document.getElementById("video-cards");
     for (let stream of json_data.streams) {
@@ -87,8 +25,12 @@ const startWebApp = () => {
 const constructCardVideo = (parentButtonDiv, element) => {
     if ("name" in element && "mediaFile" in element) {
         let video = document.createElement('video');
-        video.src = element.mediaFile
+        video.src = element.mediaFile;
         video.oncanplay = () => {
+            if (index === 0) {
+                let preview = document.getElementById('preview-player');
+                preview.src = element.mediaFile;
+            }
             let button = document.createElement("button");
             button.className = index === 0 ? "card focus-button" : "card";
             button.textContent = element.name;
@@ -100,14 +42,45 @@ const constructCardVideo = (parentButtonDiv, element) => {
     }
 };
 
+
+const endedVideo = () => {
+    const videoContainer = document.getElementById('div-video-player');
+    const video = document.getElementById('video-player');
+    video.pause();
+    exitFullscreen();
+    videoContainer.classList.add("hide-element");
+}
+
+const exitFullscreen = () => {
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+    }
+}
+
+const enterFullScreen = (video) => {
+    if (video.requestFullscreen) {
+        video.requestFullscreen();
+    } else if (video.webkitRequestFullscreen) {
+        video.webkitRequestFullscreen();
+    } else if (video.msRequestFullscreen) {
+        video.msRequestFullscreen();
+    }
+}
+
 document.addEventListener('keydown', (e) => {
     const currentFocus = document.querySelector('.focus-button');
     if (currentFocus !== null) {
+        const focusDiv = document.getElementById('video-cards');
         const currentId = parseInt(currentFocus.id);
         const buttonList = document.querySelectorAll(".card");
         const videoContainer = document.getElementById('div-video-player');
         const video = document.getElementById('video-player');
         const preview = document.getElementById('preview-player');
+        const buttonHeight = document.querySelector('.card').clientHeight;
         switch (e.keyCode) {
             case 8:
                 videoContainer.classList.add("hide-element");
@@ -121,6 +94,7 @@ document.addEventListener('keydown', (e) => {
                 videoContainer.classList.remove("hide-element");
                 enterFullScreen(video);
                 video.play();
+                preview.pause();
                 break;
             case 38: //up
                 if (currentId > 0) {
@@ -128,7 +102,9 @@ document.addEventListener('keydown', (e) => {
                     currentFocus.classList.remove("focus-button");
                     prevFocus.classList.add("focus-button");
                     preview.src = prevFocus.getAttribute('source');
-                    preview.play();
+                    preview.muted = true;
+                    scrollVal -= buttonHeight + 7;
+                    focusDiv.scroll(0, scrollVal)
                 }
                 break;
             case 40: //down
@@ -137,39 +113,15 @@ document.addEventListener('keydown', (e) => {
                     currentFocus.classList.remove("focus-button");
                     nextFocus.classList.add("focus-button");
                     preview.src = nextFocus.getAttribute('source');
-                    preview.play();
+                    preview.muted = true;
+                    scrollVal += buttonHeight + 7;
+                    focusDiv.scroll(0, scrollVal)
                 }
                 break;
-            // case "37": //left
-            // case "39": //right
+            case 80:
+                preview.muted = true;
+                preview.play();
+                break;
         }
     }
 });
-
-const endedVideo = () => {
-    const videoContainer = document.getElementById('div-video-player');
-    const video = document.getElementById('video-player');
-    video.pause();
-    exitFullscreen();
-    videoContainer.classList.add("hide-element");
-}
-
-const exitFullscreen = () => {
-    if (document.exitFullscreen) {
-        document.exitFullscreen();
-    } else if (document.webkitExitFullscreen) { /* Safari */
-        document.webkitExitFullscreen();
-    } else if (document.msExitFullscreen) { /* IE11 */
-        document.msExitFullscreen();
-    }
-}
-
-const enterFullScreen = (video) => {
-    if (video.requestFullscreen) {
-        video.requestFullscreen();
-    } else if (video.webkitRequestFullscreen) { /* Safari */
-        video.webkitRequestFullscreen();
-    } else if (video.msRequestFullscreen) { /* IE11 */
-        video.msRequestFullscreen();
-    }
-}
